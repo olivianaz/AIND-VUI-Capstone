@@ -137,16 +137,17 @@ def final_model(input_dim, units, output_dim=29):
     """ Build a deep network for speech 
     """
     recurrent_dropout = 0.3
+    
     # Main acoustic input
     input_data = Input(name='the_input', shape=(None, input_dim))
     # TODO: Specify the layers in your network
-    bidir_rnn = Bidirectional(GRU(units, activation='relu', implementation=2, return_sequences=True, recurrent_dropout=recurrent_dropout), merge_mode="concat")(input_data)    
+    bidir_rnn = Bidirectional(GRU(units, activation='relu', implementation=2, return_sequences=True,  recurrent_dropout=recurrent_dropout), merge_mode="concat")(input_data)    
     bn_rnn = BatchNormalization(name="bn_1")(bidir_rnn)
     
     # TODO: Add a TimeDistributed(Dense(output_dim)) layer
     time_dense = TimeDistributed(Dense(output_dim))(bn_rnn)
 
-    bidir_rnn2 = Bidirectional(GRU(units, activation='relu', implementation=2, return_sequences=True, recurrent_dropout=recurrent_dropout), merge_mode="concat")(time_dense)
+    bidir_rnn2 = Bidirectional(GRU(units, activation='relu', implementation=2, return_sequences=True,  recurrent_dropout=recurrent_dropout), merge_mode="concat")(time_dense)
     bn_rnn2 = BatchNormalization(name="bn_2")(bidir_rnn2)
     # TODO: Add a TimeDistributed(Dense(output_dim)) layer
     time_dense2 = TimeDistributed(Dense(output_dim))(bn_rnn2)
